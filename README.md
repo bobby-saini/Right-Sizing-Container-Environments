@@ -7,7 +7,7 @@ Best Practices for Managing Compute Resources in Container Environments (On-prem
 
 These are sample files used for creating containers with compute resources for learning in a lab environment 
 
-##Mini-Lab – Right-Size Containers While Running (No Downtime)
+## Mini-Lab – Right-Size Containers While Running (No Downtime)
 
 ### Create a directory or workspace to store files
 mkdir /home/densify; cd /home/densify
@@ -47,6 +47,7 @@ kubectl config current-context
 ### Create a small Container Deployment of an application (2 copies of Wordpress).  Also, specify some resource requests and limits for both CPU and Memory.  See sample code below, cut and paste into a file using any editor: 
 vi deployment.yaml
 
+```` javascript
 <--SNIP-->
 apiVersion: apps/v1
 kind: Deployment
@@ -75,7 +76,8 @@ spec:
             cpu: "250m"
             memory: "64Mi"
 <--SNIP-->
- 
+````
+
 ### Save the file and deploy the containers
 kubectl apply -f deployment.yaml
 
@@ -86,9 +88,7 @@ kubectl get pods
 kubectl describe pod
 
 ### Modify the CPU and Memory settings for running containers
-kubectl set resources deployment wordpress -c=wp \
-  --limits=cpu=300m,memory=256Mi \
-  --requests=cpu=200m,memory=192Mi
+kubectl set resources deployment wordpress -c=wp --limits=cpu=300m,memory=256Mi --requests=cpu=200m,memory=192Mi
 
 The changes will take effect automatically, new pods will be automatically deployed using the new resource requests and limits while the older ones using the incorrect settings will be terminated.
 
